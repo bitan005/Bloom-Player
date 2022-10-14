@@ -31,11 +31,15 @@ def openfiles():
         playsong(0)
     else:
         add_to_end = messagebox.askyesno('Bloom Player', 'Do you want to create a new playlist?\nIf NO, songs will be added to queue.')
-        print(add_to_end)
         if add_to_end==True:
             playlist.clear()
-            playlist += new_songs
+            for i in new_songs:
+                if i in playlist():
+                    continue
+                else:
+                    playlist.append(i)
             playsong(0)
+            
         elif add_to_end==False:
             playlist.extend(new_songs)
             lbl_upnexttitle['text'] = os.path.basename(playlist[current_song+1])
@@ -195,7 +199,7 @@ icon_unmute = PhotoImage(file='icons/unmute.png')
 
 lbl_currentlyplaying = LabelFrame(root, text="CURRENTLY PLAYING", font=('consolas', 11, 'bold'), relief=RIDGE)
 lbl_currentlyplaying.grid(row=0, column=0, padx=3)
-lbl_currentlyplayingtitle = Label(lbl_currentlyplaying, text='\n', font=('consolas', 10), width=60, wraplength=480)
+lbl_currentlyplayingtitle = Label(lbl_currentlyplaying, text='WELCOME TO BLOOM PLAYER\n ',font=('consolas', 10), width=60, wraplength=480)
 lbl_currentlyplayingtitle.grid(row=0, column=0)
 
 frm_controls = Frame(root)
@@ -214,11 +218,15 @@ btn_open.grid(row=0, column=4, padx=10, pady=2)
 frm_adcontrols = Frame(root)
 frm_adcontrols.grid(row=2, column=0)
 btn_autoplay = Button(frm_adcontrols, text="Autoplay: ON", command=toggle_autoplay)
-btn_autoplay.grid(row=0, column=0, pady=10)
-btn_volume = Button(frm_adcontrols, text='Volume', image=icon_unmute, borderwidth=0, command=toggle_mute)
-btn_volume.grid(row=0, column=1, padx=5, pady=10)
-slider_volume = ttk.Scale(frm_adcontrols, from_=0, to=100, orient=HORIZONTAL, length=150, value=100, command=set_volume)
-slider_volume.grid(row=0, column=2, padx=5, pady=10)
+btn_autoplay.grid(row=0, column=0, pady=10, padx=5)
+btn_playlist = Button(frm_adcontrols, text='Show Playlist')
+btn_playlist.grid(row=0, column=1, pady=10, padx=5)
+lbl_volume = LabelFrame(frm_adcontrols, text='VOLUME', font=('consolas', 11, 'bold'), relief=RIDGE)
+lbl_volume.grid(row=0, column=2, pady=10)
+btn_volume = Button(lbl_volume, text='Volume', image=icon_unmute, borderwidth=0, command=toggle_mute)
+btn_volume.grid(row=0, column=0, padx=5, pady=3)
+slider_volume = ttk.Scale(lbl_volume, from_=0, to=100, orient=HORIZONTAL, length=150, value=100, command=set_volume)
+slider_volume.grid(row=0, column=1, padx=5, pady=3)
 
 frm_progress = LabelFrame(root)
 frm_progress.grid(row=3, column=0)

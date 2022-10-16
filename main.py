@@ -4,12 +4,13 @@ from tkinter import messagebox
 from tkinter import ttk
 import pygame.mixer as pym
 from mutagen.mp3 import MP3
-import time, os
+import time, os, webbrowser
 
 pym.init()
 
 playlist = []
 current_song = 0
+current_song_name = ""
 playing = False
 stopped = True
 autoplay = True
@@ -19,11 +20,21 @@ muted = False
 total_time = 0
 converted_total_time = 0
 
+def openfolder():
+    folder_path = str(filedialog.askdirectory(title='Choose your folder'))
+    mp3_files = []
+    for i in os.listdir(folder_path):
+        if i.endswith('mp3'):
+            mp3_files.append(f'{folder_path}/{i}')
+    
+    openandplay(mp3_files)
 
-def openfiles():
+def openfiles(x=None):
+    new_songs = list(filedialog.askopenfilenames(title="Choose Song(s)", filetypes=(("mp3 Files", "*.mp3" ), )))
+    openandplay(new_songs)
+
+def openandplay(new_songs):
     global playlist
-    new_songs = list(filedialog.askopenfilenames(title="Choose A Song", filetypes=(("mp3 Files", "*.mp3" ), )))
-
     if new_songs==[]:
         pass
     elif playlist==[]:
@@ -39,8 +50,7 @@ def openfiles():
                 else:
                     playlist.append(i)
             playsong(0)
-            
-        elif add_to_end==False:
+        else:
             playlist.extend(new_songs)
             lbl_upnexttitle['text'] = os.path.basename(playlist[current_song+1])
 
@@ -70,8 +80,7 @@ def playsong(n):
 
     play_time()
 
-
-def playbtn():
+def playbtn(x=None):
     global playing
     if playlist==[] and stopped==True:
         pass
@@ -87,12 +96,12 @@ def playbtn():
             playing = False
             pym.music.pause()
 
-def nextbtn():
+def nextbtn(x=None):
     global current_song
-    lbl_currenttime.after_cancel(id_)
     if stopped==True or len(playlist)==1:
         pass
     else:
+        lbl_currenttime.after_cancel(id_)
         try:
             current_song += 1
             playsong(current_song)
@@ -100,12 +109,12 @@ def nextbtn():
             current_song = 0
             playsong(current_song)
 
-def prevbtn():
+def prevbtn(x=None):
     global current_song
-    lbl_currenttime.after_cancel(id_)
     if stopped==True or len(playlist)==1:
         pass
     else:
+        lbl_currenttime.after_cancel(id_)
         try:
             current_song -= 1
             playsong(current_song)
@@ -113,9 +122,8 @@ def prevbtn():
             current_song = -1
             playsong(current_song)
 
-def stop():
-    global stopped, playing, current_song
-    current_song = 0
+def stop(x=None):
+    global stopped, playing
     playing = False
     stopped = True
     btn_playpause['image'] = icon_play
@@ -147,8 +155,7 @@ def play_time():
             nextbtn()
             return
         else:
-            return
-
+            stop()
     elif playing==True:
         next_time = int(slider_progress.get()) + 1
         slider_progress['value'] = next_time
@@ -158,13 +165,11 @@ def play_time():
 
     id_ = lbl_currenttime.after(1000, play_time)
     
-
-
 def slider(x):
     if not stopped:
         pym.music.play(loops=0, start=slider_progress.get())
 
-def toggle_mute():
+def toggle_mute(x=None):
     global muted
     if muted==False:
         btn_volume['image'] = icon_mute
@@ -172,7 +177,7 @@ def toggle_mute():
         muted = True
     else:
         btn_volume['image'] = icon_unmute
-        pym.music.set_volume(slider_volume.get())
+        pym.music.set_volume(slider_volume.get()/100)
         muted = False
 
 def set_volume(x=0):
@@ -180,11 +185,51 @@ def set_volume(x=0):
         return
     pym.music.set_volume(slider_volume.get()/100)
 
+def show_playlist():
+    if playlist==[]:
+        messagebox.showerror("Bloom Player", "Playlist is empty. Add some songs first")
+    else:
+        playlist_window = Toplevel()
+        playlist_window.title("Bloom Player - Playlist")
+        playlist_window.configure(height=200, width=650)
+
+        lst_playlist = Listbox(playlist_window,activestyle="underline",background="black", fg='pink', width=80)
+        lst_playlist.grid(column=0, padx=10, pady=10, row=0)
+
+        for i in playlist:
+            lst_playlist.insert(END, os.path.basename(i))
+
+def show_shortcuts():
+
+    help_window = Toplevel()
+    help_window.resizable(False, False)
+    help_window.title("Bloom Player - Shortcuts")
+
+    frm_heading = Frame(help_window)
+    frm_heading.grid(column=0, padx=5, pady=5, row=0)
+    lbl_heading = Label(frm_heading, font="{consolas} 24 {}", justify="center", text='Shortcut Keys')
+    lbl_heading.grid(column=0, row=0)
+
+    frm_shortcuts = Frame(help_window)
+    frm_shortcuts.grid(column=0, row=1)
+    lbl_funcheading = LabelFrame(frm_shortcuts, height=200, text='FUNCTION', width=200)
+    lbl_funcheading.grid(column=1, ipadx=10, padx=10, pady=10, row=0)
+    lbl_functions = Label(lbl_funcheading, font="{consolas} 12", justify="left", text='Open Files\nPlay/Pause\nNext\nPrevious\nStop\nMute/Unmute')
+    lbl_functions.grid(column=0, padx=10, pady=10, row=0)
+
+    lbl_keysheading = LabelFrame(frm_shortcuts)
+    lbl_keysheading.grid(column=0, padx=10, pady=10, row=0)
+    lbl_keysheading.configure(height=200, text='KEY', width=200)
+    lbl_keys = Label(lbl_keysheading, font="{consolas} 12 {}", justify="center", text='O\nSpace\nN\nP\nX\nM')
+    lbl_keys.grid(column=0, padx=10, pady=10, row=0)
+
+    help_window.mainloop()
 
 
 root = Tk()
 root.title("Bloom Player")
-root.geometry('500x360')
+root.geometry('500x380')
+root.resizable(0, 0)
 
 
 icon_play = PhotoImage(file='icons/play.png')
@@ -195,6 +240,20 @@ icon_previous = PhotoImage(file='icons/previous.png')
 icon_stop = PhotoImage(file='icons/stop.png')
 icon_mute = PhotoImage(file='icons/mute.png')
 icon_unmute = PhotoImage(file='icons/unmute.png')
+
+menubar = Menu(root)
+root.config(menu=menubar)
+
+menu_file = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="File", menu=menu_file)
+menu_file.add_command(label="Open File(s)", command=openfiles)
+menu_file.add_command(label="Open Folder", command=openfolder)
+
+menu_help = Menu(menubar, tearoff=0)
+menubar.add_cascade(label="Help", menu=menu_help)
+menu_help.add_command(label="Shortcut Keys", command=show_shortcuts)
+menu_help.add_command(label="About")
+menu_help.add_command(label="Contact Developer", command=lambda:webbrowser.open('https://github.com/bitan005')  )
 
 
 lbl_currentlyplaying = LabelFrame(root, text="CURRENTLY PLAYING", font=('consolas', 11, 'bold'), relief=RIDGE)
@@ -219,8 +278,9 @@ frm_adcontrols = Frame(root)
 frm_adcontrols.grid(row=2, column=0)
 btn_autoplay = Button(frm_adcontrols, text="Autoplay: ON", command=toggle_autoplay)
 btn_autoplay.grid(row=0, column=0, pady=10, padx=5)
-btn_playlist = Button(frm_adcontrols, text='Show Playlist')
+btn_playlist = Button(frm_adcontrols, text='Show Playlist', command=show_playlist)
 btn_playlist.grid(row=0, column=1, pady=10, padx=5)
+
 lbl_volume = LabelFrame(frm_adcontrols, text='VOLUME', font=('consolas', 11, 'bold'), relief=RIDGE)
 lbl_volume.grid(row=0, column=2, pady=10)
 btn_volume = Button(lbl_volume, text='Volume', image=icon_unmute, borderwidth=0, command=toggle_mute)
@@ -242,5 +302,11 @@ lbl_upnext.grid(row=4, column=0, padx=3, pady=10)
 lbl_upnexttitle = Label(lbl_upnext, text='\n', font=('consolas', 10), width=60, wraplength=480)
 lbl_upnexttitle.grid(row=0, column=0)
 
+root.bind('<space>', playbtn)
+root.bind('m', toggle_mute)
+root.bind('n', nextbtn)
+root.bind('p', prevbtn)
+root.bind('o', openfiles)
+root.bind('x', stop)
 
 root.mainloop()

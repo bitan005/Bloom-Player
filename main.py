@@ -311,6 +311,9 @@ def show_shortcuts():
 
     help_window.mainloop()
 
+def close():
+    pym.music.stop()
+    root.destroy()
 
 root = Tk()
 root.title("Bloom Player")
@@ -395,4 +398,5 @@ root.bind('p', prevbtn)
 root.bind('o', openfiles)
 root.bind('x', stop)
 
+root.protocol("WM_DELETE_WINDOW", close)
 root.mainloop()

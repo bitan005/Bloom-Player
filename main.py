@@ -6,6 +6,7 @@ import pygame.mixer as pym
 from mutagen.mp3 import MP3
 import time, os, webbrowser
 
+
 pym.init()
 
 playlist = []
@@ -20,8 +21,9 @@ muted = False
 total_time = 0
 converted_total_time = 0
 
+
 def openfolder():
-    folder_path = str(filedialog.askdirectory(title='Choose your folder'))
+    folder_path = str(filedialog.askdirectory(title='Choose Folder'))
     mp3_files = []
     for i in os.listdir(folder_path):
         if i.endswith('mp3'):
@@ -41,23 +43,25 @@ def openandplay(new_songs):
         playlist += new_songs
         playsong(0)
     else:
-        add_to_end = messagebox.askyesno('Bloom Player', 'Do you want to create a new playlist?\nIf NO, songs will be added to queue.')
-        if add_to_end==True:
+        create_new_playlist = messagebox.askyesno('Bloom Player', 'Do you want to create a new playlist?\nIf NO, songs will be added to queue.')
+        if create_new_playlist==True:
             playlist.clear()
+            playlist += new_songs
+            playsong(0)
+        else:
             for i in new_songs:
-                if i in playlist():
+                if i in playlist:
                     continue
                 else:
                     playlist.append(i)
-            playsong(0)
-        else:
-            playlist.extend(new_songs)
-            lbl_upnexttitle['text'] = os.path.basename(playlist[current_song+1])
+            if len(playlist)>1:
+                lbl_upnexttitle['text'] = os.path.basename(playlist[current_song+1])
 
     print(playlist)
     
 def playsong(n):
-    global stopped, playing, total_time, converted_total_time
+    global stopped, playing, total_time, converted_total_time, current_song_name
+    current_song_name = playlist[current_song]
     lbl_currentlyplayingtitle['text'] = os.path.basename(playlist[n])
     try:
         lbl_upnexttitle['text'] = os.path.basename(playlist[n+1])
@@ -70,14 +74,13 @@ def playsong(n):
     lbl_currenttime['text'] = "00:00"
     slider_progress['value'] = 0
 
-    total_time = MP3(playlist[current_song]).info.length
+    total_time = MP3(current_song_name).info.length
     converted_total_time = time.strftime('%M:%S', time.gmtime(total_time))
     lbl_totaltime['text'] = converted_total_time
     slider_progress['to'] = total_time
 
     pym.music.load(playlist[n])
     pym.music.play(loops=0)
-
     play_time()
 
 def playbtn(x=None):
@@ -97,30 +100,44 @@ def playbtn(x=None):
             pym.music.pause()
 
 def nextbtn(x=None):
-    global current_song
+    global current_song, current_song_name
     if stopped==True or len(playlist)==1:
         pass
     else:
         lbl_currenttime.after_cancel(id_)
         try:
             current_song += 1
+            current_song_name = playlist[current_song]
             playsong(current_song)
         except IndexError:
             current_song = 0
             playsong(current_song)
+            current_song_name = playlist[current_song]
+        try:    
+            lst_playlist.selection_clear(0, END)
+            lst_playlist.selection_set(current_song)
+        except:
+            pass
 
 def prevbtn(x=None):
-    global current_song
+    global current_song, current_song_name
     if stopped==True or len(playlist)==1:
         pass
     else:
         lbl_currenttime.after_cancel(id_)
         try:
             current_song -= 1
+            current_song_name = playlist[current_song]
             playsong(current_song)
         except IndexError:
             current_song = -1
+            current_song_name = playlist[current_song]
             playsong(current_song)
+        try:    
+            lst_playlist.selection_clear(0, END)
+            lst_playlist.selection_set(current_song)
+        except:
+            pass
 
 def stop(x=None):
     global stopped, playing
@@ -185,19 +202,88 @@ def set_volume(x=0):
         return
     pym.music.set_volume(slider_volume.get()/100)
 
+def pl_play_song():
+    global current_song, current_song_name
+    s = lst_playlist.curselection()[0]
+    if s==current_song:
+        messagebox.showinfo("Bloom Player", "This song is already playing.")
+    else:
+        current_song = s 
+        current_song_name = playlist[current_song]   
+        lbl_currenttime.after_cancel(id_)
+        playsong(s)
+
+def update_playlistbox():
+    lst_playlist.delete(0, END)
+    for i in playlist:
+        lst_playlist.insert(END, os.path.basename(i))
+
+def pl_shift_up():
+    global playlist
+    s = lst_playlist.curselection()[0]
+    if playlist[s]==current_song_name:
+        messagebox.showerror("Bloom Player", "This Song is currently playing.\nThis cannot be shifted.")
+    else:
+        playlist[s], playlist[s-1] = playlist[s-1], playlist[s]
+        update_playlistbox()
+        if s==0:
+            lst_playlist.selection_set(len(playlist)-1) 
+        else:
+            lst_playlist.selection_set(s-1) 
+
+def pl_shift_down():
+    global playlist
+    s = lst_playlist.curselection()[0]
+    if playlist[s]==current_song_name:
+        messagebox.showerror("Bloom Player", "This Song is currently playing.\nThis cannot be shifted.")
+    else:
+        try:
+            playlist[s], playlist[s+1] = playlist[s+1], playlist[s]
+            update_playlistbox()
+            lst_playlist.selection_set(s+1)  
+        except IndexError:
+            sd = playlist.pop()
+            playlist = [sd]+playlist
+            update_playlistbox()
+            lst_playlist.selection_set(0)
+
+def pl_delete_song():
+    global playlist
+    s = lst_playlist.curselection()[0]
+    if playlist[s]==current_song_name:
+        messagebox.showerror("Bloom Player", "This Song is currently playing.\nThis cannot be deleted.")
+    else:
+        playlist.pop(s)
+        update_playlistbox()
+        lst_playlist.selection_set(s)
+
 def show_playlist():
+    global lst_playlist
     if playlist==[]:
         messagebox.showerror("Bloom Player", "Playlist is empty. Add some songs first")
     else:
         playlist_window = Toplevel()
         playlist_window.title("Bloom Player - Playlist")
-        playlist_window.configure(height=200, width=650)
+        playlist_window.resizable(0,0)
 
-        lst_playlist = Listbox(playlist_window,activestyle="underline",background="black", fg='pink', width=80)
+        lst_playlist = Listbox(playlist_window,activestyle="underline", background="black", fg='pink', selectmode=SINGLE, width=80, selectbackground='pink', selectforeground='black')
         lst_playlist.grid(column=0, padx=10, pady=10, row=0)
 
-        for i in playlist:
-            lst_playlist.insert(END, os.path.basename(i))
+        frm_buttons = Frame(playlist_window, height=200, width=200)
+        frm_buttons.grid(column=1, row=0)
+        btn_shiftup = Button(frm_buttons, text='Shift Up', width=8, command=pl_shift_up)
+        btn_shiftup.grid(column=0, padx=5, pady=5, row=0)
+        btn_shiftdown = Button(frm_buttons, text='Shift Down', width=8, command=pl_shift_down)
+        btn_shiftdown.grid(column=0, padx=5, pady=5, row=1)
+        btn_play = Button(frm_buttons,text='Play Song', width=8, command=pl_play_song)
+        btn_play.grid(column=0, padx=5, pady=5, row=2)
+        btn_remove = Button(frm_buttons, text='Remove ', width=8, command=pl_delete_song)
+        btn_remove.grid(column=0, padx=5, pady=5, row=3)
+
+        update_playlistbox()
+        lst_playlist.selection_set(current_song)   
+
+        playlist_window.mainloop()
 
 def show_shortcuts():
 

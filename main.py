@@ -326,7 +326,7 @@ def show_about():
     lbl_heading = Label(about_window, font=("", 24), text='About ', width=5)
     lbl_heading.grid(column=0, row=0)
 
-    img_icon = PhotoImage(file="icons8-flower-70.png")
+    img_icon = PhotoImage(file="icons/icons8-flower-70.png")
     lbl_icon = Label(about_window, image=img_icon)
     lbl_icon.grid(column=0, pady=10, row=1)
     lbl_about = Label(about_window, font="{Liberation Mono} 12 {}", text='Bloom Player is a music player to play MP3 files.\n\nCurrent Version: 1.3.0\nLiscense: GPL3\n\nMade with Love by Bitan', wraplength=300)

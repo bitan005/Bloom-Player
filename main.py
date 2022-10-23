@@ -22,8 +22,10 @@ total_time = 0
 converted_total_time = 0
 
 
-def openfolder():
+def openfolder(x=None):
     folder_path = str(filedialog.askdirectory(title='Choose Folder'))
+    if folder_path=="":
+        return
     mp3_files = []
     for i in os.listdir(folder_path):
         if i.endswith('mp3'):
@@ -47,6 +49,7 @@ def openandplay(new_songs):
         if create_new_playlist==True:
             playlist.clear()
             playlist += new_songs
+            lbl_currenttime.after_cancel(id_)
             playsong(0)
         else:
             for i in new_songs:
@@ -144,8 +147,8 @@ def stop(x=None):
     playing = False
     stopped = True
     btn_playpause['image'] = icon_play
-    lbl_currentlyplayingtitle['text'] = ''
-    lbl_upnexttitle['text'] = ''
+    lbl_currentlyplayingtitle['text'] = '\n'
+    lbl_upnexttitle['text'] = '\n'
     lbl_currenttime['text'] = '00:00'
     lbl_totaltime['text'] = '00:00'
     slider_progress['value'] = 0
@@ -315,6 +318,33 @@ def close():
     pym.music.stop()
     root.destroy()
 
+def show_about():
+    about_window = Toplevel()
+    about_window.resizable(False, False)
+    about_window.title("Bloom Player - About")
+
+    lbl_heading = Label(about_window, font=("", 24), text='About ', width=5)
+    lbl_heading.grid(column=0, row=0)
+
+    img_icon = PhotoImage(file="icons8-flower-70.png")
+    lbl_icon = Label(about_window, image=img_icon)
+    lbl_icon.grid(column=0, pady=10, row=1)
+    lbl_about = Label(about_window, font="{Liberation Mono} 12 {}", text='Bloom Player is a music player to play MP3 files.\n\nCurrent Version: 1.3.0\nLiscense: GPL3\n\nMade with Love by Bitan', wraplength=300)
+    lbl_about.grid(column=0, padx=10, pady=10, row=2)
+
+    lbl_links = LabelFrame(about_window, font="{n} 11 {}", height=200, text='ADDITIONAL LINKS', width=350)
+    lbl_links.grid(column=0, padx=10, pady=10, row=3)
+    lbl_repolink = Button(lbl_links, cursor="hand2", foreground="#000093", text='Official Repository', relief=FLAT, command=lambda:webbrowser.open("https://www.github.com/bitan005/Bloom-Player"))
+    lbl_repolink.grid(column=0, padx=3, pady=3, row=0)
+    lbl_liscence = Button(lbl_links, cursor="hand2", foreground="#000093", text='Liscence', relief=FLAT, command=lambda:webbrowser.open("https://www.gnu.org/licenses/gpl-3.0.txt"))
+    lbl_liscence.grid(column=1, padx=3, pady=3, row=0)
+    lbl_reportbugs = Button(lbl_links, cursor="hand2", foreground="#000093", text='Report Bugs or \nSuggest a Feature', relief=FLAT, command=lambda:webbrowser.open("https://www.github.com/bitan005/Bloom-Player/issues"))
+    lbl_reportbugs.grid(column=0, padx=3, pady=3, row=1)
+    lbl_contactdeveloper = Button(lbl_links, cursor="hand2", foreground="#000093", text='Contact Developer', relief=FLAT, command=lambda:webbrowser.open("https://www.github.com/bitan005"))
+    lbl_contactdeveloper.grid(column=1, padx=3, pady=3, row=1)
+
+    about_window.mainloop()
+
 root = Tk()
 root.title("Bloom Player")
 root.geometry('500x380')
@@ -335,13 +365,13 @@ root.config(menu=menubar)
 
 menu_file = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="File", menu=menu_file)
-menu_file.add_command(label="Open File(s)", command=openfiles)
-menu_file.add_command(label="Open Folder", command=openfolder)
+menu_file.add_command(label="Open File(s)           Ctrl+O", command=openfiles)
+menu_file.add_command(label="Open Folder            Ctrl+F", command=openfolder)
 
 menu_help = Menu(menubar, tearoff=0)
 menubar.add_cascade(label="Help", menu=menu_help)
 menu_help.add_command(label="Shortcut Keys", command=show_shortcuts)
-menu_help.add_command(label="About")
+menu_help.add_command(label="About", command=show_about)
 menu_help.add_command(label="Contact Developer", command=lambda:webbrowser.open('https://github.com/bitan005')  )
 
 
@@ -395,8 +425,10 @@ root.bind('<space>', playbtn)
 root.bind('m', toggle_mute)
 root.bind('n', nextbtn)
 root.bind('p', prevbtn)
-root.bind('o', openfiles)
+root.bind('<Control-o>', openfiles)
+root.bind('<Control-f>', openfolder)
 root.bind('x', stop)
+
 
 root.protocol("WM_DELETE_WINDOW", close)
 root.mainloop()

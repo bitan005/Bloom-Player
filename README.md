@@ -1,38 +1,49 @@
 # Bloom Player
-<img alt='Current Version' src='https://img.shields.io/badge/Current%20Version-1.3.1-white/?style=for-the-badge&color=white'/>   <img alt='Liscence' src='https://img.shields.io/badge/liscense-GPL%20V3-red/?style=for-the-badge'/> <img alt='Python' src='https://img.shields.io/badge/Made%20with-Python-blue/?style=for-the-badge&logo=python&color=blue'/>
+<img alt='Current Version' src='https://img.shields.io/badge/Current%20Version-1.3.1-white/?style=for-the-badge&color=white'/>   <img alt='Liscence' src='https://img.shields.io/github/license/bitan005/Bloom-Player?style=for-the-badge'/> <img alt='Python' src='https://img.shields.io/badge/Made%20with-Python-blue/?style=for-the-badge&logo=python&color=blue'/>
 
-Bloom Player is a MP3 player to play your favorite songs.
+<div align="center">
+<strong>Bloom Player is a MP3 player to play your favorite songs. </strong>
+</div>
+<hr>
 
-## Prerequisites
+## 📌 Prerequisites
+
 To run Bloom Player on your device, make sure you have the following packages installed.
 
  - pygame
  - mutagen
   
   To install them at once, run `pip install pygame mutagen` in your terminal.
-  The rest of the packages are already installed, so there will be no need to install them.
+  The rest of the packages come pre-installed with Python, so you don't need to install them again.
   
-## Usage
-![Screenshot from 2022-10-16 10-41-03](https://user-images.githubusercontent.com/83669071/197404762-dbb42cf8-6475-4096-afb7-3a9e51a8a727.png)
+## 📷 Snaps & Usage
 
-> This is the main player window.
+<img src="https://user-images.githubusercontent.com/83669071/197404762-dbb42cf8-6475-4096-afb7-3a9e51a8a727.png">
 
-![Screenshot from 2022-10-23 23-03-18](https://user-images.githubusercontent.com/83669071/197406913-74d578af-a357-4621-9957-ed731e944d33.png)
+> This is how the main player looks like.
 
-To open a file, press **Ctrl+O** or use the open file button or even go to **File> Open Files** .
-You can also open a directory by **Ctrl+F** or by going to **File> Open Folder** .
+<img src="https://user-images.githubusercontent.com/83669071/197406913-74d578af-a357-4621-9957-ed731e944d33.png">
 
-![Screenshot from 2022-10-23 23-04-30](https://user-images.githubusercontent.com/83669071/197406956-2b0174cf-8d82-483a-a9e2-ae75c6934e3c.png)
+> To open a file do either one of these:
+> - Press **Ctrl+O**
+> - Click on the **Music Folder** icon in the player window
+> - Go to **File > Open File(s)**
 
-To view the current playlist, click on **Show Playlist** button. You can remove songs or even change the order of songs from here.
+> You can also open a folder by either of the methods below:
+> - Pressing **Ctrl+F**
+> - Going **File > Open Folder**
 
-![Screenshot from 2022-10-23 23-03-55](https://user-images.githubusercontent.com/83669071/197407027-630c0200-f9d3-4735-bc7e-f913911ddee5.png)
+<img src="https://user-images.githubusercontent.com/83669071/197406956-2b0174cf-8d82-483a-a9e2-ae75c6934e3c.png">
 
-Also there is an **Autoplay** feature.
+> To view the current playlist, click on **Show Playlist** button.<br>You can remove songs or even change the order of songs from here.
 
-![Screenshot from 2022-10-23 23-09-20](https://user-images.githubusercontent.com/83669071/197407114-c9fcf2a9-ad94-4e54-b985-81aec2f35200.png)
+<img src="https://user-images.githubusercontent.com/83669071/197407027-630c0200-f9d3-4735-bc7e-f913911ddee5.png">
 
-For getting the shortcut key reference, you can go to **Help> Shortcut Keys**.
+> There is also an **Autoplay** feature which can be toggled using this button on the main player window.
+
+<img src="https://user-images.githubusercontent.com/83669071/197407114-c9fcf2a9-ad94-4e54-b985-81aec2f35200.png">
+
+> For getting the Shortcut Keys reference, you can go to **Help> Shortcut Keys**.
 
 ## Acknowledgements 
 I would like to thank [flatplanet](https://github.com/flatplanet/)'s repository [mp3](https://github.com/flatplanet/mp3) for being a great help in making Bloom Player.

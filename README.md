@@ -1,7 +1,8 @@
-# Bloom Player
-<img alt='Current Version' src='https://img.shields.io/badge/Current%20Version-1.3.1-white/?style=for-the-badge&color=white'/>   <img alt='Liscence' src='https://img.shields.io/github/license/bitan005/Bloom-Player?style=for-the-badge'/> <img alt='Python' src='https://img.shields.io/badge/Made%20with-Python-blue/?style=for-the-badge&logo=python&color=blue'/>
+# Bloom Player 🌷
 
 <div align="center">
+<img alt='Current Version' src='https://img.shields.io/badge/Current%20Version-1.3.1-white/?style=for-the-badge&color=white'/>   <img alt='Liscence' src='https://img.shields.io/github/license/bitan005/Bloom-Player?style=for-the-badge'/> <img alt='Python' src='https://img.shields.io/badge/Made%20with-Python-blue/?style=for-the-badge&logo=python&color=blue'/>
+
 <strong>Bloom Player is a MP3 player to play your favorite songs. </strong>
 </div>
 <hr>

@@ -2,9 +2,9 @@
 
 <div align="center">
 
-<img alt='Current Version' src='https://img.shields.io/badge/Current%20Version-1.3.1-white/?style=for-the-badge&color=white'/>   <img alt='Liscence' src='https://img.shields.io/github/license/bitan005/Bloom-Player?style=for-the-badge'/> <img alt='Python' src='https://img.shields.io/badge/Made%20with-Python-blue/?style=for-the-badge&logo=python&color=blue'/>
+<img alt='Current Version' src='https://img.shields.io/badge/Current%20Version-1.3.1-white/?style=for-the-badge&color=white'/>   <img alt='Licence' src='https://img.shields.io/github/license/bitan005/Bloom-Player?style=for-the-badge'/> <img alt='Python' src='https://img.shields.io/badge/Made%20with-Python-blue/?style=for-the-badge&logo=python&color=blue'/>
 
-<strong>Bloom Player is a MP3 player to play your favorite songs. </strong>
+<strong>Bloom Player is a MP3 player to play your favorite songs with every feature you could imagine. </strong>
 
 </div>
 <hr>
@@ -16,10 +16,15 @@ To run Bloom Player on your device, make sure you have the following packages in
  - pygame
  - mutagen
   
-  To install them at once, run `pip install pygame mutagen` in your terminal.
+  To install them at once, run the following command in Terminal/Command Prompt:
+
+  ```bash
+  pip install pygame mutagen
+  ```
+ 
   The rest of the packages come pre-installed with Python, so you don't need to install them again.
   
-## 📷 Snaps & Usage
+## 📋 Features
 
 <img src="https://user-images.githubusercontent.com/83669071/197404762-dbb42cf8-6475-4096-afb7-3a9e51a8a727.png">
 
@@ -48,19 +53,32 @@ To run Bloom Player on your device, make sure you have the following packages in
 
 > For getting the Shortcut Keys reference, you can go to **Help> Shortcut Keys**.
 
-## Acknowledgements 
-I would like to thank [flatplanet](https://github.com/flatplanet/)'s repository [mp3](https://github.com/flatplanet/mp3) for being a great help in making Bloom Player.
-
-Also all Icons are downloaded from [Icons8](https://www.icons8.com):
-|Icon	| Link | Icon | Link|
-|--|--|--|--|
-| ![icons8-flower-70](https://user-images.githubusercontent.com/83669071/197404300-107cecd6-2b47-4215-b44b-6f1a984a870a.png)| [Bloom Player Icon](https://icons8.com/icon/lBV40HOoU5pE/flower) | ![play](https://user-images.githubusercontent.com/83669071/197404490-89cf5713-c762-4fdf-9eb0-9d35b296bb72.png)| [Play](https://icons8.com/icon/121268/start) |
-| ![open](https://user-images.githubusercontent.com/83669071/197404461-0ccb537c-86a2-4616-8090-26d36896fc56.png)| [Music Folder](https://icons8.com/icon/119500/music-folder) | ![pause](https://user-images.githubusercontent.com/83669071/197404499-56d2607b-6bfa-4af7-8d43-8e74ab89bca3.png)| [Pause](https://icons8.com/icon/121240/pause-squared) |
-| ![icons8-mute-64](https://user-images.githubusercontent.com/83669071/197404446-304c2bc5-67e0-4620-9ae3-5b35fdfd6729.png)| [Mute](https://icons8.com/icon/119574/mute) | ![stop](https://user-images.githubusercontent.com/83669071/197404506-0d69fa21-6737-45ac-ab7c-3086de637365.png)| [Stop](https://icons8.com/icon/121269/stop-squared) |
-| ![icons8-audio-64](https://user-images.githubusercontent.com/83669071/197404344-89f6bb93-337b-4419-b48e-a33da4dbdd28.png)| [Unmute](https://icons8.com/icon/119558/audio) | ![next](https://user-images.githubusercontent.com/83669071/197404510-be27c362-302a-471c-a6e6-75439ea5eb8e.png)| [Next](https://icons8.com/icon/121229/last) |
-| ![previous](https://user-images.githubusercontent.com/83669071/197404511-ba96c92a-2d89-456c-a16f-ec32b717ca31.png)| [Previous](https://icons8.com/icon/121222/first) |
-
-## Found a Bug?
+## 🛠️ Found a Bug?
 Or maybe want to suggest a new feature?
 
-Your suggestions are always welcome. You can directly create an Issue [**here**](https://github.com/bitan005/Bloom-Player/issues) or contact me on **[Instagram](https://www.instagram.com/__bitan05__)**.
+Your suggestions are always welcome. Feel free to open an issue with your bug report or feature request [**here**](https://github.com/bitan005/Bloom-Player/issues), with as many details as possible.
+
+> If you'd like to write a feature, please open an issue first for discussion.
+
+For any other query/suggestions, contact me on my **[Instagram](https://www.instagram.com/__bitan05__)**.
+
+## 🤗 Special Thanks To
+
+- [flatplanet](https://github.com/flatplanet/mp3) - For his project which was the inspiration to create this project.
+- [Icons8](https://www.icons8.com) - For the icons used in this project
+
+|Icon	| Link | Icon | Link|
+|--|--|--|--|
+| <img src = "https://user-images.githubusercontent.com/83669071/197404300-107cecd6-2b47-4215-b44b-6f1a984a870a.png"> | [Bloom Player Icon](https://icons8.com/icon/lBV40HOoU5pE/flower) | <img src="https://user-images.githubusercontent.com/83669071/197404490-89cf5713-c762-4fdf-9eb0-9d35b296bb72.png"> | [Play](https://icons8.com/icon/121268/start) |
+| <img src = "https://user-images.githubusercontent.com/83669071/197404461-0ccb537c-86a2-4616-8090-26d36896fc56.png"> | [Music Folder](https://icons8.com/icon/119500/music-folder) | <img src = "https://user-images.githubusercontent.com/83669071/197404499-56d2607b-6bfa-4af7-8d43-8e74ab89bca3.png"> | [Pause](https://icons8.com/icon/121240/pause-squared) |
+| <img src = "https://user-images.githubusercontent.com/83669071/197404446-304c2bc5-67e0-4620-9ae3-5b35fdfd6729.png"> | [Mute](https://icons8.com/icon/119574/mute) | <img src = "https://user-images.githubusercontent.com/83669071/197404506-0d69fa21-6737-45ac-ab7c-3086de637365.png"> | [Stop](https://icons8.com/icon/121269/stop-squared) |
+| <img src = "https://user-images.githubusercontent.com/83669071/197404344-89f6bb93-337b-4419-b48e-a33da4dbdd28.png"> | [Unmute](https://icons8.com/icon/119558/audio) | <img src = "https://user-images.githubusercontent.com/83669071/197404510-be27c362-302a-471c-a6e6-75439ea5eb8e.png"> | [Next](https://icons8.com/icon/121229/last) |
+| <img src = "https://user-images.githubusercontent.com/83669071/197404511-ba96c92a-2d89-456c-a16f-ec32b717ca31.png"> | [Previous](https://icons8.com/icon/121222/first) |
+
+## Authors ✒️
+
+- [@bitan005](https://github.com/bitan005)
+- [@TheKaushikGoswami](https://github.com/TheKaushikGoswami)
+------
+
+Made with :heart: in India
